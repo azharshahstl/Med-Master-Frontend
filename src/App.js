@@ -6,6 +6,7 @@ import './App.css';
 import HomePage from './HomePage/HomePage'
 import SignUpModal from './UI/Modals/SignUpModal'
 import LogInModal from './UI/Modals/LoginModal'
+import CurrentMedications from './CurrentMedications/CurrentMedications'
 
 class App extends React.Component {
 
@@ -30,9 +31,10 @@ class App extends React.Component {
   render () {
     return (
       <>
-        <SignUpModal />
+        <CurrentMedications />
+        {/* <SignUpModal />
         <LogInModal />
-        <HomePage signup={this.signUpHandler} login={this.logInHandler}/> 
+        <HomePage signup={this.signUpHandler} login={this.logInHandler}/>  */}
         
       </>
     );
