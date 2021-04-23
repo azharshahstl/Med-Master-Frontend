@@ -24,7 +24,9 @@ const CurrentMedications = ({medications}) => {
                 {activeMedications.map(med => <MedicineCard medicine={med}/>)}
             </div>
             <div style={styles.actionsContainer}>
-                Actions Go Here
+                <button style={styles.actionBtns}>Make Journal Entry</button>
+                <button style={styles.actionBtns}>Add a New Medication</button>
+                <button style={styles.actionBtns}>View a List of All Meds Taken</button>
             </div>
         </div>
     )
@@ -54,10 +56,22 @@ const styles = {
         borderTop: 'none'
     },
     actionsContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',
         height: '25%',
         borderStyle: 'solid',
         borderWidth: '1px',
         borderTop: 'none'
+    },
+    actionBtns: {
+        width: '50vh',
+        height: '5vh',
+        backgroundColor: 'darkslateblue',
+        borderRadius: '15px',
+        color: 'white',
+        fontSize: '3vh'
     }
 }
 
