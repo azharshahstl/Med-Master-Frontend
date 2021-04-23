@@ -25,13 +25,118 @@ class App extends React.Component {
       dosage: '500/25', 
       startDate: '03/23/21',
       endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
     }]
   }
 
   render () {
     return (
       <>
-        <CurrentMedications />
+        <CurrentMedications medications={this.state.medications} />
         {/* <SignUpModal />
         <LogInModal />
         <HomePage signup={this.signUpHandler} login={this.logInHandler}/>  */}

@@ -1,6 +1,7 @@
 import React from 'react'
+import MedicineCard from './MedicineCard'
 
-const CurrentMedications = () => {
+const CurrentMedications = ({medications}) => {
     const currentDay = () => {
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
@@ -10,16 +11,16 @@ const CurrentMedications = () => {
         return mm + '/' + dd + '/' + yyyy;
     }
     return (
-        <div>
-            <div style={styles.currentMedHeader}>
+        <div style={styles.currentMedsContainer}>
+            <div style={styles.headerContainer}>
                 <h1>Current Medications</h1>
                 <h2>Today's Date</h2>
                 <h3>{currentDay()}</h3>
             </div>
-            <div>
-                Medicines Go Here
+            <div style={styles.medicinesContainer}>
+                {medications.map(med => <MedicineCard medicine={med}/>)}
             </div>
-            <div>
+            <div style={styles.actionsContainer}>
                 Actions Go Here
             </div>
         </div>
@@ -27,11 +28,33 @@ const CurrentMedications = () => {
 }
 
 const styles = {
-    currentMedHeader: {
+    currentMedsContainer: {
+        height: '100vh'
+    },
+    headerContainer: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        height: '25%'
+        justifyContent: 'center',
+        height: '20%',
+        overflow: 'hidden',
+        borderStyle: 'solid',
+        borderWidth: '1px'
+    },
+    medicinesContainer: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        height: '55%',
+        overflowY: 'auto',
+        borderStyle: 'solid',
+        borderWidth: '1px',
+        borderTop: 'none'
+    },
+    actionsContainer: {
+        height: '25%',
+        borderStyle: 'solid',
+        borderWidth: '1px',
+        borderTop: 'none'
     }
 }
 
