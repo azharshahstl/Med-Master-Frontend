@@ -133,6 +133,10 @@ class App extends React.Component {
     }]
   }
 
+  removeMedication({}) {
+
+  }
+
   render () {
     return (
       <>

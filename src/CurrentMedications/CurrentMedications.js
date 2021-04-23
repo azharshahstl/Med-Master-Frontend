@@ -10,6 +10,9 @@ const CurrentMedications = ({medications}) => {
 
         return mm + '/' + dd + '/' + yyyy;
     }
+
+    let activeMedications = medications.filter(med => Date.parse(med.startDate) <= Date.parse(currentDay()) && (!med.endDate || Date.parse(med.endDate) >= Date.parse(currentDay())))
+
     return (
         <div style={styles.currentMedsContainer}>
             <div style={styles.headerContainer}>
@@ -18,7 +21,7 @@ const CurrentMedications = ({medications}) => {
                 <h3>{currentDay()}</h3>
             </div>
             <div style={styles.medicinesContainer}>
-                {medications.map(med => <MedicineCard medicine={med}/>)}
+                {activeMedications.map(med => <MedicineCard medicine={med}/>)}
             </div>
             <div style={styles.actionsContainer}>
                 Actions Go Here
