@@ -9,6 +9,24 @@ import LogInModal from './UI/Modals/LoginModal'
 
 class App extends React.Component {
 
+  state = {
+    user: {
+      name: 'Azhar',
+      email: 'a@a.com', 
+      password: '123'
+    }, 
+    medications: [{
+      name: 'Singular',
+      dosage: '30mg', 
+      startDate: '01/01/21'
+    }, {
+      name: 'Advair', 
+      dosage: '500/25', 
+      startDate: '03/23/21',
+      endDate: '04/11/21'
+    }]
+  }
+
   render () {
     return (
       <>
