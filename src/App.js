@@ -6,6 +6,7 @@ import './App.css';
 import HomePage from './HomePage/HomePage'
 import SignUpModal from './UI/Modals/SignUpModal'
 import LogInModal from './UI/Modals/LoginModal'
+import UsersMeds from './UsersMeds/UsersMeds';
 
 class App extends React.Component {
 
@@ -33,7 +34,7 @@ class App extends React.Component {
         <SignUpModal />
         <LogInModal />
         <HomePage signup={this.signUpHandler} login={this.logInHandler}/> 
-        
+        <UsersMeds user={this.state.user} medications={this.state.medications} />
       </>
     );
 }};
