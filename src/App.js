@@ -6,7 +6,6 @@ import './App.css';
 import HomePage from './HomePage/HomePage'
 import SignUpModal from './UI/Modals/SignUpModal'
 import LogInModal from './UI/Modals/LoginModal'
-import CurrentMedications from './CurrentMedications/CurrentMedications'
 
 class App extends React.Component {
 
@@ -25,125 +24,15 @@ class App extends React.Component {
       dosage: '500/25', 
       startDate: '03/23/21',
       endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
     }]
-  }
-
-  removeMedication({}) {
-
   }
 
   render () {
     return (
       <>
-        <CurrentMedications medications={this.state.medications} />
-        {/* <SignUpModal />
+        <SignUpModal />
         <LogInModal />
-        <HomePage signup={this.signUpHandler} login={this.logInHandler}/>  */}
+        <HomePage signup={this.signUpHandler} login={this.logInHandler}/> 
         
       </>
     );
