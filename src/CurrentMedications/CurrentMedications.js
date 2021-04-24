@@ -1,13 +1,23 @@
 import React, {useState} from 'react'
 import MedicineCard from './MedicineCard'
 import JournalEntry from './JournalEntry';
+import ChangeDosage from './ChangeDosage'
 import * as styles from './CurrentMedications.module.css'
 
-const CurrentMedications = ({medications, endDosage}) => {
+const CurrentMedications = ({medications, endDosage, changeDosage}) => {
     const [showEntry, setShowEntry] = useState(false)
+    const [showChangeDosage, setShowChangeDosage] = useState(null)
 
     const closeEntry = () => {
         setShowEntry(false)
+    }
+
+    const openChangeDosage = (medicine) => {
+        setShowChangeDosage(medicine)
+    }
+
+    const closeChangeDosage = () => {
+        setShowChangeDosage(null)
     }
 
     const currentDay = () => {
@@ -29,7 +39,7 @@ const CurrentMedications = ({medications, endDosage}) => {
                 <h3>{currentDay()}</h3>
             </div>
             <div className={styles.medicinesContainer}>
-                {activeMedications.map(med => <MedicineCard medicine={med} endDosage={endDosage} day={currentDay()}/>)}
+                {activeMedications.map(med => <MedicineCard medicine={med} endDosage={endDosage} day={currentDay()} openChangeDosage={openChangeDosage}/>)}
             </div>
             <div className={styles.actionsContainer}>
                 <button className={styles.actionBtns} onClick={() => setShowEntry(true)}>Make Journal Entry</button>
@@ -37,6 +47,7 @@ const CurrentMedications = ({medications, endDosage}) => {
                 <button className={styles.actionBtns}>View a List of All Meds Taken</button>
             </div>
             {showEntry ? <JournalEntry date={currentDay()} closeEntry={closeEntry}/> : <></>}
+            {showChangeDosage ? <ChangeDosage medicine={showChangeDosage} closeChangeDosage={closeChangeDosage} changeDosage={changeDosage} day={currentDay()}/> : <></>}
         </div>
     )
 }

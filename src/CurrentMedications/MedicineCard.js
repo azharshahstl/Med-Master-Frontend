@@ -1,7 +1,7 @@
 import React from 'react';
 import * as styles from './MedicineCard.module.css'
 
-const MedicineCard = ({medicine, endDosage, day}) => {
+const MedicineCard = ({medicine, endDosage, day, openChangeDosage}) => {
 
     return(
         <div className={styles.medicineCard}>
@@ -15,7 +15,7 @@ const MedicineCard = ({medicine, endDosage, day}) => {
             </div>
             <div className={styles.cardRow}>
                 <button onClick={() => endDosage(medicine, day)}>Delete Medication</button>
-                <button>Change Dosage</button>
+                <button onClick={() => openChangeDosage(medicine)}>Change Dosage</button>
             </div>
         </div>
     )

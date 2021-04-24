@@ -44,13 +44,35 @@ class App extends React.Component {
     })
   }
 
+  changeDosage = (dosage, day, newAmount) => {
+    let newDosage = {...dosage.attributes}
+    newDosage['start_date'] = day
+    newDosage.amount = newAmount
+    this.endDosage(dosage, day)
+    .then(() => {
+      console.log('here')
+      fetch('http://localhost:4000/api/v1/dosages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({dosage: newDosage})
+      })
+      .then(res => res.json())
+      .then(({data}) => {
+        let newMedications = [...this.state.medications, data]
+        this.setState({medications: newMedications})
+      })
+    })
+  }
+
   render () {
     return (
       <>
         {/* <SignUpModal />
         <LogInModal />
         <HomePage signup={this.signUpHandler} login={this.logInHandler}/>  */}
-        <CurrentMedications medications={this.state.medications} endDosage={this.endDosage}/>
+        <CurrentMedications medications={this.state.medications} endDosage={this.endDosage} changeDosage={this.changeDosage}/>
       </>
     );
 }};
