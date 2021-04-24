@@ -3,7 +3,7 @@ import MedicineCard from './MedicineCard'
 import JournalEntry from './JournalEntry';
 import * as styles from './CurrentMedications.module.css'
 
-const CurrentMedications = ({medications}) => {
+const CurrentMedications = ({medications, endDosage}) => {
     const [showEntry, setShowEntry] = useState(false)
 
     const closeEntry = () => {
@@ -19,7 +19,7 @@ const CurrentMedications = ({medications}) => {
         return mm + '/' + dd + '/' + yyyy;
     }
 
-    let activeMedications = medications.filter(med => Date.parse(med.startDate) <= Date.parse(currentDay()) && (!med.endDate || Date.parse(med.endDate) > Date.parse(currentDay())))
+    let activeMedications = medications.filter(med => Date.parse(med.attributes['start_date']) <= Date.parse(currentDay()) && (!med.attributes['end_date'] || Date.parse(med.attributes['end_date']) > Date.parse(currentDay())))
 
     return (
         <div className={styles.currentMedsContainer}>
@@ -29,7 +29,7 @@ const CurrentMedications = ({medications}) => {
                 <h3>{currentDay()}</h3>
             </div>
             <div className={styles.medicinesContainer}>
-                {activeMedications.map(med => <MedicineCard medicine={med}/>)}
+                {activeMedications.map(med => <MedicineCard medicine={med} endDosage={endDosage} day={currentDay()}/>)}
             </div>
             <div className={styles.actionsContainer}>
                 <button className={styles.actionBtns} onClick={() => setShowEntry(true)}>Make Journal Entry</button>
