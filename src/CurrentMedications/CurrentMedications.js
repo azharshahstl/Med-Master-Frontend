@@ -1,7 +1,14 @@
-import React from 'react'
+import React, {useState} from 'react'
 import MedicineCard from './MedicineCard'
+import JournalEntry from './JournalEntry';
 
 const CurrentMedications = ({medications}) => {
+    const [showEntry, setShowEntry] = useState(false)
+
+    const closeEntry = () => {
+        setShowEntry(false)
+    }
+
     const currentDay = () => {
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
@@ -24,10 +31,11 @@ const CurrentMedications = ({medications}) => {
                 {activeMedications.map(med => <MedicineCard medicine={med}/>)}
             </div>
             <div style={styles.actionsContainer}>
-                <button style={styles.actionBtns}>Make Journal Entry</button>
+                <button style={styles.actionBtns} onClick={() => setShowEntry(true)}>Make Journal Entry</button>
                 <button style={styles.actionBtns}>Add a New Medication</button>
                 <button style={styles.actionBtns}>View a List of All Meds Taken</button>
             </div>
+            {showEntry ? <JournalEntry date={currentDay()} closeEntry={closeEntry}/> : <></>}
         </div>
     )
 }
