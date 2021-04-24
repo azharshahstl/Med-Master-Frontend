@@ -35,3 +35,7 @@
     color: white;
     font-size: 3vh;
 }
+
+.entryBtns:disabled {
+    background-color: rgb(48, 44, 73);
+}
