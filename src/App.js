@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import './App.css';
 import HomePage from './HomePage/HomePage'
 import SignUpLogInModal from './UI/Modals/SignUpLoginModal'
+import UserMainContent from './containers/UserMainContent';
 import { Switch, Route, withRouter} from 'react-router-dom';
 
 class App extends React.Component {
@@ -107,11 +108,15 @@ class App extends React.Component {
     return <SignUpLogInModal login={false} userSignUp={this.userSignUp}/>
   }
 
+  renderUserMainContent = () => {
+    return <UserMainContent user ={this.state.user} token={this.state.token} />
+  }
+
   render () {
     return (
       <div className="App">
         <Switch>
-          <Route path="/" exact component={Welcome}/>
+          <Route path="/" exact component={HomePage}/>
           <Route path="/user_login" render={this.renderUserLogin}/>
           <Route path="/user_signup" render={this.renderUserSignUp}/>
           <Route path="/user_main" render={this.renderUserMainContent}/>
