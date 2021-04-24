@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button, Container } from "reactstrap";
 import { useHistory } from 'react-router-dom'
-import classes from './HomePage.module.css';
+// import classes from './HomePage.module.css';
 
-const homePage = () => {
+const HomePage = () => {
 
     let history = useHistory()
 
@@ -19,4 +19,4 @@ const homePage = () => {
         </div>
     );
 }
-export default homePage;
+export default HomePage;
