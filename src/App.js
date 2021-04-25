@@ -9,9 +9,8 @@ import LogInModal from './UI/Modals/LoginModal'
 import CurrentMedications from './CurrentMedications/CurrentMedications'
 import UsersMeds from './UsersMeds/UsersMeds';
 import SignUpLogInModal from './UI/Modals/SignUpLoginModal'
-import SignUpModal from './UI/Modals/SignUpModal'
 import UserMainContent from './containers/UserMainContent';
-import { Switch, Route, withRouter} from 'react-router-dom';
+import { Switch, Route, withRouter, Link} from 'react-router-dom';
 import InitialMedsPage from './InitialMedsPageContainer/InitialMedsPage'
 
 class App extends React.Component {
@@ -110,8 +109,9 @@ class App extends React.Component {
         })
       })
    }
+  }
   
-  componentDidMount(){
+  componentDidMount() {
     if(localStorage.token){  
       fetch('http://localhost:4000/user_persist',{
       headers: {
@@ -120,11 +120,10 @@ class App extends React.Component {
       })
       .then(res => res.json())
       .then(json => this.userAuthResponse(json))
-      .then(() => {
-        fetch('http://localhost:4000/api/v1/dosages')
-        .then(res => res.json())
-        .then(({data}) => this.setState({medications: data}))
-      })
+    } else {
+      fetch('http://localhost:4000/api/v1/dosages')
+      .then(res => res.json())
+      .then(({data}) => this.setState({medications: data}))
     }
   }
 
@@ -203,7 +202,6 @@ class App extends React.Component {
   render () {
     return (
       <div className="App">
-
          <SignUpModal 
           showModal={this.state.signUpModal} 
           closeModal={this.cancelSignUpHandler}
@@ -214,7 +212,7 @@ class App extends React.Component {
         {/* <LogInModal /> */}
         {this.state.registrationStatus ? null : <HomePage signup={this.signUpHandler} login={this.logInHandler}/>}
 
-        <UsersMeds user={this.state.user} medications={this.state.medications} />
+        <UsersMeds user={this.state.name} medications={this.state.medications} />
         <Switch>
           <Route path="/" exact component={HomePage}/>
           <Route path="/current_medications" render={() => <CurrentMedications medications={this.state.medications} endDosage={this.endDosage} changeDosage={this.changeDosage}/>} />

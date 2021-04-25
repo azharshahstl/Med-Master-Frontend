@@ -2,11 +2,11 @@ import React from 'react'
 import './UsersMeds.module.css'
 
 const UsersMeds = props => {
-  const { user, medications } = props;
+  const { name, medications } = props;
 
   return (
     <>
-      <h3>{user.name}'s Medications</h3>
+      <h3>{name}'s Medications</h3>
       <ul>
         {medications.map((medication, index) => {
           return (

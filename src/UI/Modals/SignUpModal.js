@@ -1,5 +1,5 @@
 import React from 'react';
-import BackDrop from './BackDrop/BackDrop'
+import BackDrop from './Backdrop/BackDrop'
 import classes from './Modal.module.css'
 
 
