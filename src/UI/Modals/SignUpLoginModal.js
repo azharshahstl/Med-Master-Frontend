@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Card, Form, Input, Container, Col } from "reactstrap";
 
 export default class SignUpLogInModal extends React.Component {
+
     state = {
         name: "",
         password: "",
@@ -17,6 +18,7 @@ export default class SignUpLogInModal extends React.Component {
     generateSignUpForm = () => {
         return(
             <Form className="register-form" onSubmit={(e) => {
+                console.log(this)
                 e.preventDefault()
                 this.props.userSignUp(this.state)
             }}>
