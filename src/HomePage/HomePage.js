@@ -1,13 +1,22 @@
 import React from 'react';
-import classes from './HomePage.module.css';
+import { Button, Container } from "reactstrap";
+import { useHistory } from 'react-router-dom'
+// import classes from './HomePage.module.css';
 
-const homePage = (props) => {
+const HomePage = () => {
+
+    let history = useHistory()
 
     return (
-        <div className={classes.Buttons} >
-            <button onClick={props.signup}>Sign Up</button>
-            <button onClick={props.login}>Log In</button>
+        <div className="page-header">
+            <Container className='welcome-page'>
+                <h1>Medicine</h1>
+                <h3>Medicine</h3>
+                <br />
+                <Button className="login-button" onClick={() => history.push('/user_signup')}> User Sign Up</Button>
+                <Button className="login-button" onClick={() => history.push('/user_login')}>User Login</Button>
+            </Container>
         </div>
-    )}; 
-
-export default homePage;
+    );
+}
+export default HomePage;
