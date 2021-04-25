@@ -6,11 +6,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     height: 20%;
     overflow: hidden;
     border-style: solid;
     border-width: 1px;
+}
+
+.headerContainer > h1,h2,h3 {
+    margin: 0;
 }
 
 .medicinesContainer {
