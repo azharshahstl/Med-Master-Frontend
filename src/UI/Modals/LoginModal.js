@@ -5,11 +5,11 @@ const loginModal = (props) => {
 
     return (
         <div>
-            <div>User Name</div>
+            {/* <div>User Name</div>
             <div>Password</div>
             <button>
                 Sign In
-            </button>
+            </button> */}
         </div>
     )}; 
 

@@ -5,17 +5,15 @@ import React from 'react';
 import './App.css';
 import HomePage from './HomePage/HomePage'
 import SignUpModal from './UI/Modals/SignUpModal'
-import LogInModal from './UI/Modals/LoginModal'
-import InitialMedsPage from './InitialMedsPage/InitialMedsPage'
+// import LogInModal from './UI/Modals/LoginModal'
+import InitialMedsPage from './InitialMedsPageContainer/InitialMedsPage'
 
 class App extends React.Component {
 
   state = {
-    user: {
-      name: 'Azhar',
-      email: 'a@a.com', 
-      password: '123'
-    }, 
+    name: '',
+    email: '', 
+    password: '', 
     medications: [{
       name: 'Singular',
       dosage: '30mg', 
@@ -40,17 +38,30 @@ class App extends React.Component {
   };
 
   signupInfoHandler = (event) => {
-    this.setState({ user: {
-      [event.target.name]: event.target.value
-    }})
-  }
+    this.setState({
+      [event.target.name]: event.target.value 
+    })
+  
+  };
 
   registrationHandler = () => {
     this.setState({
       registrationStatus: true, 
       signUpModal: false
     })
-  }
+  };
+
+  addMedHandler = (event) => {
+      const medsCopy = [...this.state.medications]
+      let newMedObject = {}
+      newMedObject[event.target.name] = event.target.value
+
+      this.setState({
+        medications: [...medsCopy,
+          newMedObject
+        ]
+      })
+  };
 
   render () {
     return (
@@ -61,9 +72,9 @@ class App extends React.Component {
           signUpInfo={this.signupInfoHandler}
           register={this.registrationHandler}
         />
-        {this.state.registrationStatus ? <InitialMedsPage /> : null}
-        <LogInModal />
-        <HomePage signup={this.signUpHandler} login={this.logInHandler}/> 
+        {this.state.registrationStatus ? <InitialMedsPage addMed={this.addMedHandler}/> : null}
+        {/* <LogInModal /> */}
+        {this.state.registrationStatus ? null : <HomePage signup={this.signUpHandler} login={this.logInHandler}/>}
         
       </>
     );
