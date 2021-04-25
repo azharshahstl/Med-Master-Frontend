@@ -1,45 +1,24 @@
 import React from 'react';
+import * as styles from './MedicineCard.module.css'
 
-const MedicineCard = ({medicine}) => {
+const MedicineCard = ({medicine, endDosage, day, openChangeDosage}) => {
+
     return(
-        <div style={styles.medicineCard}>
-            <div style={styles.cardRow}>
-                <span>{medicine.name}</span>
-                <span>{medicine.dosage}</span>
+        <div className={styles.medicineCard}>
+            <div className={styles.cardRow}>
+                <span>{medicine.attributes.medicine.name}</span>
+                <span>{medicine.attributes.amount}</span>
             </div>
-            <div style={styles.cardRow}>
+            <div className={styles.cardRow}>
                 <span>Start Date</span>
-                <span>{medicine.startDate}</span>
+                <span>{medicine.attributes['start_date']}</span>
             </div>
-            <div style={styles.cardRow}>
-                <button>Delete Medication</button>
-                <button>Change Dosage</button>
+            <div className={styles.cardRow}>
+                <button onClick={() => endDosage(medicine, day)}>Delete Medication</button>
+                <button onClick={() => openChangeDosage(medicine)}>Change Dosage</button>
             </div>
         </div>
     )
-}
-
-const styles = {
-    medicineCard:{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '30vh',
-        height: '30vh',
-        padding: '3vh',
-        margin: '5vh',
-        borderStyle: 'solid',
-        borderWidth: '1px',
-        borderColor: 'black',
-        borderRadius: '15px',
-        boxShadow: '10px 10px 8px #888888'
-    },
-    cardRow:{
-        display: 'flex',
-        justifyContent: 'space-between',
-        width: 'inherit'
-    }
 }
 
 export default MedicineCard
