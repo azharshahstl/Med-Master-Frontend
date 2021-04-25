@@ -4,8 +4,10 @@ import React from 'react';
 
 import './App.css';
 import HomePage from './HomePage/HomePage'
+import SignUpLogInModal from './UI/Modals/SignUpLoginModal'
 import SignUpModal from './UI/Modals/SignUpModal'
-// import LogInModal from './UI/Modals/LoginModal'
+import UserMainContent from './containers/UserMainContent';
+import { Switch, Route, withRouter} from 'react-router-dom';
 import InitialMedsPage from './InitialMedsPageContainer/InitialMedsPage'
 
 class App extends React.Component {
@@ -63,10 +65,97 @@ class App extends React.Component {
       })
   };
 
+  
+  
+
+  componentDidMount(){
+    if(localStorage.token){  
+      fetch('http://localhost:3000/user_persist',{
+      headers: {
+        "Authorization": `Bearer ${localStorage.token}`
+      }
+      })
+      .then(res => res.json())
+      .then(json => this.userAuthResponse(json))
+    }
+  }
+
+  userAuthResponse = (json) => {
+    if (json.user){
+      localStorage.token = json.token
+      this.setState({
+        user: {
+          id: json.user.data.attributes.id,
+          name: json.user.data.attributes.name,
+        },
+        token: json.token
+      }, () => this.props.history.push('/user_main'))
+    }
+  }
+
+  userLogin = ({name, password, email}) => {
+    let user = {
+      name: name,
+      password: password
+    }
+
+    fetch('http://localhost:3000/user_login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+    .then(res => res.json())
+    .then(json => {
+      if (!json.error){
+        this.userAuthResponse(json)
+      } else {
+        alert(json.error)
+      }
+    })
+  }
+
+  userSignUp = ({name, password, email}) => {
+    let newUser = {
+      name: name,
+      password: password,
+      email: email
+    }
+    
+    fetch('http://localhost:3000/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newUser)
+    })
+    .then(res => res.json())
+    .then(json => {
+      if (!json.error) {
+        this.userAuthResponse(json)
+      } else {
+        alert(json.error)
+      }
+    })
+  }
+
+  renderUserLogin = () => {
+    return <SignUpLogInModal login={true} userLogin={this.userLogin}/>
+  }
+
+  renderUserSignUp = () => {
+    return <SignUpLogInModal login={false} userSignUp={this.userSignUp}/>
+  }
+
+  renderUserMainContent = () => {
+    return <UserMainContent user ={this.state.user} token={this.state.token} />
+  }
+
   render () {
     return (
-      <>
-        <SignUpModal 
+      <div className="App">
+         <SignUpModal 
           showModal={this.state.signUpModal} 
           closeModal={this.cancelSignUpHandler}
           signUpInfo={this.signupInfoHandler}
@@ -75,9 +164,14 @@ class App extends React.Component {
         {this.state.registrationStatus ? <InitialMedsPage addMed={this.addMedHandler}/> : null}
         {/* <LogInModal /> */}
         {this.state.registrationStatus ? null : <HomePage signup={this.signUpHandler} login={this.logInHandler}/>}
-        
-      </>
+        <Switch>
+          <Route path="/" exact component={HomePage}/>
+          <Route path="/user_login" render={this.renderUserLogin}/>
+          <Route path="/user_signup" render={this.renderUserSignUp}/>
+          <Route path="/user_main" render={this.renderUserMainContent}/>
+        </Switch>
+      </div>
     );
 }};
 
-export default App;
+export default withRouter(App);
