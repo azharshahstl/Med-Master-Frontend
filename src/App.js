@@ -4,6 +4,9 @@ import React from 'react';
 
 import './App.css';
 import HomePage from './HomePage/HomePage'
+import SignUpModal from './UI/Modals/SignUpModal'
+import LogInModal from './UI/Modals/LoginModal'
+import UsersMeds from './UsersMeds/UsersMeds';
 import SignUpLogInModal from './UI/Modals/SignUpLoginModal'
 import SignUpModal from './UI/Modals/SignUpModal'
 import UserMainContent from './containers/UserMainContent';
@@ -155,6 +158,7 @@ class App extends React.Component {
   render () {
     return (
       <div className="App">
+
          <SignUpModal 
           showModal={this.state.signUpModal} 
           closeModal={this.cancelSignUpHandler}
@@ -164,6 +168,8 @@ class App extends React.Component {
         {this.state.registrationStatus ? <InitialMedsPage addMed={this.addMedHandler}/> : null}
         {/* <LogInModal /> */}
         {this.state.registrationStatus ? null : <HomePage signup={this.signUpHandler} login={this.logInHandler}/>}
+
+        <UsersMeds user={this.state.user} medications={this.state.medications} />
         <Switch>
           <Route path="/" exact component={HomePage}/>
           <Route path="/user_login" render={this.renderUserLogin}/>
