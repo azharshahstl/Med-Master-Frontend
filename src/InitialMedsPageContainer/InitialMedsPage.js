@@ -1,6 +1,7 @@
 import classes from './InitialMedsPage.module.css';
 import React, {useState} from 'react';
 import { useHistory } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 const InitialMedsPage = (props) => {
     let history = useHistory()
@@ -13,6 +14,14 @@ const InitialMedsPage = (props) => {
     const submitForm = (e) => {
         e.preventDefault()
         props.addMed({medName, doctorName, dosage, startDate})
+    }
+     
+    const logout = () => {
+        localStorage.clear() 
+        return (<div>
+                    <Redirect to='/'/>
+                    alert{'You have logged out'}
+                </div>)
     }
 
     return (
@@ -32,9 +41,7 @@ const InitialMedsPage = (props) => {
         </form> 
         <div className={classes.Div}>
             <button className={classes.Button} onClick={() => history.push('/current_medications')}>Back</button>
-            <button className={classes.Button} onClick={() => {history.push('/')
-                                    localStorage.clear() 
-                                    }}>Log Out</button>
+            <button className={classes.Button} onClick={logout}>Log Out</button>
          </div>
         </>
     )
