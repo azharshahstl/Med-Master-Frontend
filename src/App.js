@@ -259,6 +259,7 @@ class App extends React.Component {
           <Route path="/user_login" render={this.renderUserLogin}/>
           <Route path="/user_signup" render={this.renderUserSignUp}/>
           <Route path="/user_main" render={this.renderUserMainContent}/>
+          <Route path="/all_meds" render={() => <UsersMeds name={this.state.user.name} medications={this.state.user.medicines} dosages={this.state.user.dosages} journals={this.state.user.journals} />}/>
         </Switch>
       </div>
     );

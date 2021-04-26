@@ -47,7 +47,7 @@ const CurrentMedications = ({medicines, dosages, userId, endDosage, changeDosage
                 <div className={styles.actionsContainer}>
                     <button className={styles.actionBtns} onClick={() => setShowEntry(true)}>Make Journal Entry</button>
                     <button className={styles.actionBtns} onClick={() => history.push('/add_medication')}>Add a New Medication</button>
-                    <button className={styles.actionBtns}>View a List of All Meds Taken</button>
+                    <button className={styles.actionBtns} onClick={() => history.push('/all_meds')}>View a List of All Meds Taken</button>
                 </div>
                 {showEntry ? <JournalEntry date={currentDay()} closeEntry={closeEntry} userId={userId} journalUpdated={journalUpdated}/> : <></>}
                 {showChangeDosage ? <ChangeDosage medicine={showChangeDosage} closeChangeDosage={closeChangeDosage} changeDosage={changeDosage} day={currentDay()}/> : <></>}
