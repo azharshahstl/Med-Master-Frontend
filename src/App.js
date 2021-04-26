@@ -134,10 +134,10 @@ class App extends React.Component {
   }
 
   changeDosage = (dosage, day, newAmount) => {
-    let newDosage = {...dosage.attributes}
+    let newDosage = {...dosage}
     newDosage['start_date'] = day
     newDosage.amount = newAmount
-    if (newDosage.amount !== dosage.attributes.amount){
+    if (newDosage.amount !== dosage.amount){
       this.endDosage(dosage, day)
       .then(() => {
         console.log('here')
@@ -150,8 +150,10 @@ class App extends React.Component {
         })
         .then(res => res.json())
         .then(({data}) => {
-          let newMedications = [...this.state.medications, data]
-          this.setState({medications: newMedications})
+          let newDosages = [...this.state.user.dosages, {id: parseInt(data.id), 'user_id': data.attributes['user_id'], 'medicine_id': data.attributes['medicine_id'], amount: data.attributes.amount, 'start_date': data.attributes['start_date'], 'end_date': data.attributes['end_date']}]
+          let newUser = {...this.state.user}
+          newUser.dosages = newDosages
+          this.setState({user: newUser})
         })
       })
    }

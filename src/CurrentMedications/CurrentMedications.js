@@ -15,8 +15,8 @@ const CurrentMedications = ({medicines, dosages, userId, endDosage, changeDosage
         setShowEntry(false)
     }
 
-    const openChangeDosage = (medicine) => {
-        setShowChangeDosage(medicine)
+    const openChangeDosage = (med, dosage) => {
+        setShowChangeDosage({med, dosage})
     }
 
     const closeChangeDosage = () => {
