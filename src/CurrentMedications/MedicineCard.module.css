@@ -28,6 +28,7 @@
     color: white;
     font-size: .75rem;
     cursor: pointer;
+    margin: 0.25rem;
 }
 
 .Button:hover {

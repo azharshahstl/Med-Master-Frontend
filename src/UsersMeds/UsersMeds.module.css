@@ -1,0 +1,20 @@
+.Div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(102, 89, 16, 0.671);
+    height: 100vh;
+}
+
+.Button {
+    background-color: rgb(209, 191, 155);
+    cursor: pointer;
+    border-radius: 3px;
+    font-family: inherit;
+    margin: 1rem;
+}
+
+.Button:hover {
+    background-color: rgb(199, 127, 18);
+    color: white;
+}

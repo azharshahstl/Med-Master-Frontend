@@ -1,5 +1,5 @@
 import React from 'react'
-import './UsersMeds.module.css'
+import classes from './UsersMeds.module.css'
 import { useHistory } from 'react-router-dom'
 
 const UsersMeds = props => {
@@ -15,27 +15,29 @@ const UsersMeds = props => {
 
     return (
       <>
-        <h3>{name}'s Medications</h3>
-        <ul>
-          {formattedDosages.map((medication, index) => {
-            return (
-              <li key={index}>
-                {medication.name}: {medication.amount} | Start date: {medication.startDate}
-              </li>
-            )
-          })}
-        </ul>
-        <h3>{name}'s Journals</h3>
-        <ul>
-          {journals.map((journal, index) => {
-            return (
-              <li key={index}>
-                {journal.date}: {journal.entry}
-              </li>
-            )
-          })}
-        </ul>
-        <button onClick={() => history.push('/current_medications')}>Back</button>
+        <div className={classes.Div}>
+          <h3>{name}'s Medications</h3>
+          <ul>
+            {formattedDosages.map((medication, index) => {
+              return (
+                <li key={index}>
+                  {medication.name}: {medication.amount} | Start date: {medication.startDate}
+                </li>
+              )
+            })}
+          </ul>
+          <h3>{name}'s Journals</h3>
+          <ul>
+            {journals.map((journal, index) => {
+              return (
+                <li key={index}>
+                  {journal.date}: {journal.entry}
+                </li>
+              )
+            })}
+          </ul>
+          <button  className={classes.Button} onClick={() => history.push('/current_medications')}>Back</button>
+        </div>
       </>
     )
   } else {

@@ -26,15 +26,17 @@
 
 .entryTextArea {
     height: 75%;
+    margin-bottom: 1rem;
 }
 
 .entryBtns {
-    width: 30vh;
+    width: 20vh;
     height: 3vh;
     background-color: rgb(209, 191, 155);
     border-radius: 15px;
     color: white;
-    font-size: 3vh;
+    font-size: 2.5vh;
+    margin: 0.25rem;
 }
 
 .entryBtns:hover {

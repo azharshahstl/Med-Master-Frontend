@@ -41,7 +41,8 @@ const InitialMedsPage = (props) => {
         </form> 
         <div className={classes.Div}>
             <button className={classes.Button} onClick={() => history.push('/current_medications')}>Back</button>
-            <button className={classes.Button} onClick={logout}>Log Out</button>
+            <button className={classes.Button} onClick={() => {localStorage.clear() 
+                                                                history.push('/')}}>Log Out</button>
          </div>
         </>
     )
