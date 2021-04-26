@@ -4,10 +4,13 @@ import React from 'react';
 
 import './App.css';
 import HomePage from './HomePage/HomePage'
-import SignUpLogInModal from './UI/Modals/SignUpLoginModal'
 import SignUpModal from './UI/Modals/SignUpModal'
+import LogInModal from './UI/Modals/LoginModal'
+import CurrentMedications from './CurrentMedications/CurrentMedications'
+import UsersMeds from './UsersMeds/UsersMeds';
+import SignUpLogInModal from './UI/Modals/SignUpLoginModal'
 import UserMainContent from './containers/UserMainContent';
-import { Switch, Route, withRouter} from 'react-router-dom';
+import { Switch, Route, withRouter, Link} from 'react-router-dom';
 import InitialMedsPage from './InitialMedsPageContainer/InitialMedsPage'
 
 class App extends React.Component {
@@ -65,18 +68,62 @@ class App extends React.Component {
       })
   };
 
-  
-  
+  endDosage = (dosage, day) => {
+    let newDosage = {...dosage}
+    newDosage.attributes['end_date'] = day
+    return fetch(`http://localhost:4000/api/v1/dosages/${dosage.id}`,{
+      method: 'PUT',
+      headers: {
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify(newDosage.attributes)
+    })
+    .then(res => res.json())
+    .then(updatedDosage => {
+      let newMedications = [...this.state.medications]
+      let foundMed = newMedications.filter(med => med.id === updatedDosage.id)
+      foundMed = updatedDosage
+      this.setState({medications: newMedications})
+    })
+  }
 
-  componentDidMount(){
+  changeDosage = (dosage, day, newAmount) => {
+    let newDosage = {...dosage.attributes}
+    newDosage['start_date'] = day
+    newDosage.amount = newAmount
+    if (newDosage.amount !== dosage.attributes.amount){
+      this.endDosage(dosage, day)
+      .then(() => {
+        console.log('here')
+        fetch('http://localhost:4000/api/v1/dosages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({dosage: newDosage})
+        })
+        .then(res => res.json())
+        .then(({data}) => {
+          let newMedications = [...this.state.medications, data]
+          this.setState({medications: newMedications})
+        })
+      })
+   }
+  }
+  
+  componentDidMount() {
     if(localStorage.token){  
-      fetch('http://localhost:3000/user_persist',{
+      fetch('http://localhost:4000/user_persist',{
       headers: {
         "Authorization": `Bearer ${localStorage.token}`
       }
       })
       .then(res => res.json())
       .then(json => this.userAuthResponse(json))
+    } else {
+      fetch('http://localhost:4000/api/v1/dosages')
+      .then(res => res.json())
+      .then(({data}) => this.setState({medications: data}))
     }
   }
 
@@ -99,7 +146,7 @@ class App extends React.Component {
       password: password
     }
 
-    fetch('http://localhost:3000/user_login', {
+    fetch('http://localhost:4000/user_login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -164,8 +211,11 @@ class App extends React.Component {
         {this.state.registrationStatus ? <InitialMedsPage addMed={this.addMedHandler}/> : null}
         {/* <LogInModal /> */}
         {this.state.registrationStatus ? null : <HomePage signup={this.signUpHandler} login={this.logInHandler}/>}
+
+        <UsersMeds user={this.state.name} medications={this.state.medications} />
         <Switch>
           <Route path="/" exact component={HomePage}/>
+          <Route path="/current_medications" render={() => <CurrentMedications medications={this.state.medications} endDosage={this.endDosage} changeDosage={this.changeDosage}/>} />
           <Route path="/user_login" render={this.renderUserLogin}/>
           <Route path="/user_signup" render={this.renderUserSignUp}/>
           <Route path="/user_main" render={this.renderUserMainContent}/>
