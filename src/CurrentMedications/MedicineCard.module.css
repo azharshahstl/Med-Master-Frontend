@@ -19,3 +19,18 @@
     justify-content: space-between;
     width: inherit;
 }
+
+.Button {
+    width: 50vh;
+    height: 5vh;
+    background-color: rgb(209, 191, 155);
+    border-radius: 15px;
+    color: white;
+    font-size: .75rem;
+    cursor: pointer;
+}
+
+.Button:hover {
+    background-color: rgb(199, 127, 18);
+    color: white;
+}

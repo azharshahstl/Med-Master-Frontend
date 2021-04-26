@@ -1,15 +1,16 @@
-.Buttons {
+.Form {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-evenly; */
     align-items: center;
-    background-color: rgba(102, 89, 16, 0.671);
-    height: 100vh;
 
 }
 
+.Header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
 
-.Buttons button {
+.Form button {
     background-color: rgb(209, 191, 155);
     cursor: pointer;
     border-radius: 3px;
@@ -17,9 +18,12 @@
     margin: 1rem;
 }
 
-.Buttons button:hover {
+.Form button:hover {
     background-color: rgb(199, 127, 18);
     color: white;
 }
 
-
+.Div {
+    background-color: rgba(102, 89, 16, 0.671);
+    height: 100vh;
+}

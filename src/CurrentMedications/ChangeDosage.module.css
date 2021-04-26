@@ -20,18 +20,47 @@
     box-shadow: 10px 10px 8px #888888;
     display: flex;
     flex-direction: column;
+    align-items: center;
     
 }
 
+.changeDosageCard h3 {
+    text-align:  center;
+    margin-bottom: 0.5rem;
+}
+
+.changeDosageCard h3 + input {
+    width: 150px;
+    text-align: center;
+}
+
 .entryBtns {
-    width: 50vh;
-    height: 5vh;
+    /* width: 50vh;
+    height: 3vh;
     background-color: darkslateblue;
     border-radius: 15px;
     color: white;
-    font-size: 3vh;
+    font-size: 3vh; */
+    background-color: rgb(209, 191, 155);
+    cursor: pointer;
+    border-radius: 3px;
+    font-family: inherit;
+    margin: 1rem;
+    font-size: 1rem;
+    border-radius: 1rem;
+    height: 3vh;
+}
+
+.entryBtns:hover {
+    background-color: rgb(199, 127, 18);
+    color: white;
 }
 
 .entryBtns:disabled {
     background-color: rgb(48, 44, 73);
+}
+
+.Div {
+    display: flex;
+    justify-content: center;
 }

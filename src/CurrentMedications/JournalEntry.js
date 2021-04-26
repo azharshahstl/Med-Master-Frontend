@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import * as styles from './JournalEntry.module.css'
 
-const JournalEntry = ({date, closeEntry}) => {
+const JournalEntry = ({date, closeEntry, userId, journalUpdated}) => {
     const [entryData, setEntryData] = useState('')
 
     const saveJournal = (e) => {
@@ -9,7 +9,8 @@ const JournalEntry = ({date, closeEntry}) => {
         e.target.disabled = true
         let body = {
             date: date,
-            entry: entryData
+            entry: entryData,
+            'user_id': userId
         }
         fetch('http://localhost:4000/api/v1/journals',{
             method: 'POST',
@@ -18,7 +19,9 @@ const JournalEntry = ({date, closeEntry}) => {
             },
             body: JSON.stringify(body)
         })
-        .then(res => closeEntry())
+        .then(res => res.json())
+        .then(({data}) => journalUpdated(data))
+        .then(closeEntry())
     }
 
     return (

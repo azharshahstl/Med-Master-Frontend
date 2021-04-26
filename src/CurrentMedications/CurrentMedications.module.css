@@ -11,6 +11,7 @@
     overflow: hidden;
     border-style: solid;
     border-width: 1px;
+    background-color: rgba(102, 89, 16, 0.671);
 }
 
 .headerContainer > h1,h2,h3 {
@@ -25,6 +26,7 @@
     border-style: solid;
     border-width: 1px;
     border-top: none;
+    
 }
 
 .actionsContainer {
@@ -36,13 +38,20 @@
     border-style: solid;
     border-width: 1px;
     border-top: none;
+    background-color: rgba(102, 89, 16, 0.671);
 }
 
 .actionBtns {
     width: 50vh;
     height: 5vh;
-    background-color: darkslateblue;
+    background-color: rgb(209, 191, 155);
     border-radius: 15px;
     color: white;
     font-size: 3vh;
+    cursor: pointer;
+}
+
+.actionBtns:hover {
+    background-color: rgb(199, 127, 18);
+    color: white;
 }
