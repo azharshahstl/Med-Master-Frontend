@@ -16,19 +16,9 @@ import InitialMedsPage from './InitialMedsPageContainer/InitialMedsPage'
 class App extends React.Component {
 
   state = {
-    name: '',
-    email: '', 
-    password: '', 
-    medications: [{
-      name: 'Singular',
-      dosage: '30mg', 
-      startDate: '01/01/21'
-    }, {
-      name: 'Advair', 
-      dosage: '500/25', 
-      startDate: '03/23/21',
-      endDate: '04/11/21'
-    }], 
+    user: {},
+    token: '',
+    medications: [], 
     signUpModal: false, 
     cancelSignUp: false, 
     registrationStatus: false
@@ -56,17 +46,71 @@ class App extends React.Component {
     })
   };
 
-  addMedHandler = (event) => {
-      const medsCopy = [...this.state.medications]
-      let newMedObject = {}
-      newMedObject[event.target.name] = event.target.value
+  // addMedHandler = (event) => {
+  //     const medsCopy = [...this.state.medications]
+  //     let newMedObject = {}
+  //     newMedObject[event.target.name] = event.target.value
 
-      this.setState({
-        medications: [...medsCopy,
-          newMedObject
-        ]
+  //     this.setState({
+  //       medications: [...medsCopy,
+  //         newMedObject
+  //       ]
+  //     })
+  // };
+
+  addMedHandler = (medication) => {
+    fetch('http://localhost:4000/api/v1/medicines')
+    .then(res => res.json())
+    .then(({data}) => {
+      let match = data.filter(med => med.attributes.name === medication.medName && med.attributes['doctors_name'] === medication.doctorName)
+      if (match[0]){
+        this.createDosage(medication, match[0].id)
+      } else {
+        fetch('http://localhost:4000/api/v1/medicines', {
+          method: 'POST',
+          headers: {
+            'Content-Type':'application/json'
+          },
+          body: JSON.stringify({medicine: {name: medication.medName, 'doctors_name': medication.doctorName}})
+        })
+        .then(res => res.json())
+        .then(({data}) => {
+          console.log(data)
+          let newMeds = [...this.state.user.medicines, {id: parseInt(data.id), name: data.attributes.name, 'doctors_name': data.attributes['doctors_name']}]
+          let newUser = {...this.state.user}
+          newUser.medicines = newMeds
+          this.setState({user: newUser})
+          this.createDosage(medication, data.id)
+        })
+      }
+    })
+  }
+
+  createDosage = (medication,medId) => {
+    let newDosage = {
+      'user_id': parseInt(this.state.user.id),
+      'medicine_id': parseInt(medId),
+      amount: parseInt(medication.dosage),
+      'start_date': medication.startDate
+    }
+    fetch('http://localhost:4000/api/v1/dosages', {
+      method: 'POST',
+      headers: {
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify({dosage: newDosage})
+    })
+    .then(res => res.json())
+    .then(({data}) => {
+      let newDose = [...this.state.user.dosages, {id: parseInt(data.id), 'user_id': data.attributes['user_id'], 'medicine_id': data.attributes['medicine_id'], amount: data.attributes.amount, 'start_date': data.attributes['start_date'], 'end_date': data.attributes['end_date']}]
+      let newUser = {...this.state.user}
+      newUser.dosages = newDose
+      this.setState({user: newUser}, () => {
+        console.log(this.state.user)
+        this.props.history.push('/current_medications')
       })
-  };
+    })
+  }
 
   endDosage = (dosage, day) => {
     let newDosage = {...dosage}
@@ -113,17 +157,13 @@ class App extends React.Component {
   
   componentDidMount() {
     if(localStorage.token){  
-      fetch('http://localhost:4000/user_persist',{
+      fetch('http://localhost:4000/api/v1/user_persist',{
       headers: {
         "Authorization": `Bearer ${localStorage.token}`
       }
       })
       .then(res => res.json())
       .then(json => this.userAuthResponse(json))
-    } else {
-      fetch('http://localhost:4000/api/v1/dosages')
-      .then(res => res.json())
-      .then(({data}) => this.setState({medications: data}))
     }
   }
 
@@ -132,11 +172,13 @@ class App extends React.Component {
       localStorage.token = json.token
       this.setState({
         user: {
-          id: json.user.data.attributes.id,
-          name: json.user.data.attributes.name,
+          id: json.user.data.id,
+          ...json.user.data.attributes
         },
-        token: json.token
-      }, () => this.props.history.push('/user_main'))
+        token: json.token,
+        registrationStatus: true
+      }, () => this.props.history.push(json.user.data.attributes.dosages.length ? '/current_medications' : '/add_medication'))
+      
     }
   }
 
@@ -146,7 +188,7 @@ class App extends React.Component {
       password: password
     }
 
-    fetch('http://localhost:4000/user_login', {
+    fetch('http://localhost:4000/api/v1/user_login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -170,7 +212,7 @@ class App extends React.Component {
       email: email
     }
     
-    fetch('http://localhost:4000/users', {
+    fetch('http://localhost:4000/api/v1/users', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -202,20 +244,20 @@ class App extends React.Component {
   render () {
     return (
       <div className="App">
-         <SignUpModal 
+         {/* <SignUpModal 
           showModal={this.state.signUpModal} 
           closeModal={this.cancelSignUpHandler}
           signUpInfo={this.signupInfoHandler}
           register={this.registrationHandler}
-        />
-        {this.state.registrationStatus ? <InitialMedsPage addMed={this.addMedHandler}/> : null}
-        {/* <LogInModal /> */}
-        {this.state.registrationStatus ? null : <HomePage signup={this.signUpHandler} login={this.logInHandler}/>}
+        /> */}
+        {/* {this.state.registrationStatus ? (this.state.medications.length ? <CurrentMedications medications={this.state.medications} endDosage={this.endDosage} changeDosage={this.changeDosage}/> : <InitialMedsPage addMed={this.addMedHandler}/>): null}
+        {this.state.registrationStatus ? null : <HomePage signup={this.signUpHandler} login={this.logInHandler}/>} */}
 
-        <UsersMeds user={this.state.name} medications={this.state.medications} />
+        {/* <UsersMeds user={this.state.name} medications={this.state.medications} /> */}
         <Switch>
           <Route path="/" exact component={HomePage}/>
-          <Route path="/current_medications" render={() => <CurrentMedications medications={this.state.medications} endDosage={this.endDosage} changeDosage={this.changeDosage}/>} />
+          <Route path="/add_medication" render={() => <InitialMedsPage addMed={this.addMedHandler}/>}/>
+          <Route path="/current_medications" render={() => <CurrentMedications medicines={this.state.user.medicines} dosages={this.state.user.dosages} endDosage={this.endDosage} changeDosage={this.changeDosage}/>} />
           <Route path="/user_login" render={this.renderUserLogin}/>
           <Route path="/user_signup" render={this.renderUserSignUp}/>
           <Route path="/user_main" render={this.renderUserMainContent}/>

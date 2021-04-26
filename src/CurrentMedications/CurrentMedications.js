@@ -3,8 +3,11 @@ import MedicineCard from './MedicineCard'
 import JournalEntry from './JournalEntry';
 import ChangeDosage from './ChangeDosage'
 import * as styles from './CurrentMedications.module.css'
+import { useHistory } from 'react-router-dom'
 
-const CurrentMedications = ({medications, endDosage, changeDosage}) => {
+const CurrentMedications = ({medicines, dosages, endDosage, changeDosage}) => {
+    let history = useHistory()
+
     const [showEntry, setShowEntry] = useState(false)
     const [showChangeDosage, setShowChangeDosage] = useState(null)
 
@@ -29,7 +32,7 @@ const CurrentMedications = ({medications, endDosage, changeDosage}) => {
         return mm + '/' + dd + '/' + yyyy;
     }
 
-    let activeMedications = medications.filter(med => Date.parse(med.attributes['start_date']) <= Date.parse(currentDay()) && (!med.attributes['end_date'] || Date.parse(med.attributes['end_date']) > Date.parse(currentDay())))
+    let activeDosages = dosages.filter(dose => Date.parse(dose['start_date']) <= Date.parse(currentDay()) && (!dose['end_date'] || Date.parse(dose['end_date']) > Date.parse(currentDay())))
 
     return (
         <div className={styles.currentMedsContainer}>
@@ -39,11 +42,11 @@ const CurrentMedications = ({medications, endDosage, changeDosage}) => {
                 <h3>{currentDay()}</h3>
             </div>
             <div className={styles.medicinesContainer}>
-                {activeMedications.map(med => <MedicineCard medicine={med} endDosage={endDosage} day={currentDay()} openChangeDosage={openChangeDosage}/>)}
+                {activeDosages.map(dose => <MedicineCard medicines={medicines} dosage={dose} endDosage={endDosage} day={currentDay()} openChangeDosage={openChangeDosage}/>)}
             </div>
             <div className={styles.actionsContainer}>
                 <button className={styles.actionBtns} onClick={() => setShowEntry(true)}>Make Journal Entry</button>
-                <button className={styles.actionBtns}>Add a New Medication</button>
+                <button className={styles.actionBtns} onClick={() => history.push('/add_medication')}>Add a New Medication</button>
                 <button className={styles.actionBtns}>View a List of All Meds Taken</button>
             </div>
             {showEntry ? <JournalEntry date={currentDay()} closeEntry={closeEntry}/> : <></>}

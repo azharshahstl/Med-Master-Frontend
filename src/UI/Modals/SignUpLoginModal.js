@@ -25,7 +25,7 @@ export default class SignUpLogInModal extends React.Component {
                 <label>Password </label>
                 <Input name="password" placeholder="Password" type="password" onChange={this.handleOnChange}/><br/>
                 <label>Email </label>
-                <Input name="password" placeholder="Email" type="email" onChange={this.handleOnChange}/><br/>
+                <Input name="email" placeholder="Email" type="email" onChange={this.handleOnChange}/><br/>
                 <Button block className="login" variant='secondary' type="submit">Sign Up</Button>
                 <Button block className="login" variant='secondary' onClick={() => window.location = "/"}>Go Back</Button>
             </Form>
