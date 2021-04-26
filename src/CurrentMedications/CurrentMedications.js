@@ -32,27 +32,31 @@ const CurrentMedications = ({medicines, dosages, userId, endDosage, changeDosage
         return mm + '/' + dd + '/' + yyyy;
     }
 
-    let activeDosages = dosages.filter(dose => Date.parse(dose['start_date']) <= Date.parse(currentDay()) && (!dose['end_date'] || Date.parse(dose['end_date']) > Date.parse(currentDay())))
-
-    return (
-        <div className={styles.currentMedsContainer}>
-            <div className={styles.headerContainer}>
-                <h1>Current Medications</h1>
-                <h2>Today's Date</h2>
-                <h3>{currentDay()}</h3>
+    if(dosages){
+        let activeDosages = dosages.filter(dose => Date.parse(dose['start_date']) <= Date.parse(currentDay()) && !dose['end_date'] )
+        return (
+            <div className={styles.currentMedsContainer}>
+                <div className={styles.headerContainer}>
+                    <h1>Current Medications</h1>
+                    <h2>Today's Date</h2>
+                    <h3>{currentDay()}</h3>
+                </div>
+                <div className={styles.medicinesContainer}>
+                    {activeDosages.map(dose => <MedicineCard medicines={medicines} dosage={dose} endDosage={endDosage} day={currentDay()} openChangeDosage={openChangeDosage}/>)}
+                </div>
+                <div className={styles.actionsContainer}>
+                    <button className={styles.actionBtns} onClick={() => setShowEntry(true)}>Make Journal Entry</button>
+                    <button className={styles.actionBtns} onClick={() => history.push('/add_medication')}>Add a New Medication</button>
+                    <button className={styles.actionBtns}>View a List of All Meds Taken</button>
+                </div>
+                {showEntry ? <JournalEntry date={currentDay()} closeEntry={closeEntry} userId={userId}/> : <></>}
+                {showChangeDosage ? <ChangeDosage medicine={showChangeDosage} closeChangeDosage={closeChangeDosage} changeDosage={changeDosage} day={currentDay()}/> : <></>}
             </div>
-            <div className={styles.medicinesContainer}>
-                {activeDosages.map(dose => <MedicineCard medicines={medicines} dosage={dose} endDosage={endDosage} day={currentDay()} openChangeDosage={openChangeDosage}/>)}
-            </div>
-            <div className={styles.actionsContainer}>
-                <button className={styles.actionBtns} onClick={() => setShowEntry(true)}>Make Journal Entry</button>
-                <button className={styles.actionBtns} onClick={() => history.push('/add_medication')}>Add a New Medication</button>
-                <button className={styles.actionBtns}>View a List of All Meds Taken</button>
-            </div>
-            {showEntry ? <JournalEntry date={currentDay()} closeEntry={closeEntry} userId={userId}/> : <></>}
-            {showChangeDosage ? <ChangeDosage medicine={showChangeDosage} closeChangeDosage={closeChangeDosage} changeDosage={changeDosage} day={currentDay()}/> : <></>}
-        </div>
-    )
+        )
+    } else {
+        history.push('/')
+        return(<></>)
+    }
 }
 
 export default CurrentMedications

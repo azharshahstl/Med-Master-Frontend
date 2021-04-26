@@ -114,20 +114,22 @@ class App extends React.Component {
 
   endDosage = (dosage, day) => {
     let newDosage = {...dosage}
-    newDosage.attributes['end_date'] = day
+    newDosage['end_date'] = day
     return fetch(`http://localhost:4000/api/v1/dosages/${dosage.id}`,{
       method: 'PUT',
       headers: {
         'Content-Type':'application/json'
       },
-      body: JSON.stringify(newDosage.attributes)
+      body: JSON.stringify(newDosage)
     })
     .then(res => res.json())
-    .then(updatedDosage => {
-      let newMedications = [...this.state.medications]
-      let foundMed = newMedications.filter(med => med.id === updatedDosage.id)
-      foundMed = updatedDosage
-      this.setState({medications: newMedications})
+    .then(newDose => {
+      let newDosages = [...this.state.user.dosages]
+      let foundDose = newDosages.filter(dose => dose.id === newDose.id)[0]
+      foundDose['end_date'] = newDose['end_date']
+      let newUser = {...this.state.user}
+      newUser.dosages = newDosages
+      this.setState({user: newUser})
     })
   }
 
