@@ -29,7 +29,7 @@ const JournalEntry = ({date, closeEntry, userId, journalUpdated}) => {
             <div className={styles.journalEntryCard}>
                 <h3>Journal Entry for {date}</h3>
                 <textarea placeholder='How are you feeling today...' value={entryData} onChange={(e) => setEntryData(e.target.value)} className={styles.entryTextArea}/>
-                <div>
+                <div className={styles.Div}>
                     <button className={styles.entryBtns} onClick={(e) => saveJournal(e)}>Save</button>
                     <button onClick={() => closeEntry()} className={styles.entryBtns}>Discard</button>
                 </div>
