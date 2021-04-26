@@ -257,7 +257,7 @@ class App extends React.Component {
         <Switch>
           <Route path="/" exact component={HomePage}/>
           <Route path="/add_medication" render={() => <InitialMedsPage addMed={this.addMedHandler}/>}/>
-          <Route path="/current_medications" render={() => <CurrentMedications medicines={this.state.user.medicines} dosages={this.state.user.dosages} endDosage={this.endDosage} changeDosage={this.changeDosage}/>} />
+          <Route path="/current_medications" render={() => <CurrentMedications medicines={this.state.user.medicines} userId={this.state.user.id} dosages={this.state.user.dosages} endDosage={this.endDosage} changeDosage={this.changeDosage}/>} />
           <Route path="/user_login" render={this.renderUserLogin}/>
           <Route path="/user_signup" render={this.renderUserSignUp}/>
           <Route path="/user_main" render={this.renderUserMainContent}/>
