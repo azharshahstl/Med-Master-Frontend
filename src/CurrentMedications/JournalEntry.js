@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import * as styles from './JournalEntry.module.css'
 
-const JournalEntry = ({date, closeEntry, userId}) => {
+const JournalEntry = ({date, closeEntry, userId, journalUpdated}) => {
     const [entryData, setEntryData] = useState('')
 
     const saveJournal = (e) => {
@@ -19,7 +19,9 @@ const JournalEntry = ({date, closeEntry, userId}) => {
             },
             body: JSON.stringify(body)
         })
-        .then(res => closeEntry())
+        .then(res => res.json())
+        .then(({data}) => journalUpdated(data))
+        .then(closeEntry())
     }
 
     return (

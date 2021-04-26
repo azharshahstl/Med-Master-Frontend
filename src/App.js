@@ -46,17 +46,12 @@ class App extends React.Component {
     })
   };
 
-  // addMedHandler = (event) => {
-  //     const medsCopy = [...this.state.medications]
-  //     let newMedObject = {}
-  //     newMedObject[event.target.name] = event.target.value
-
-  //     this.setState({
-  //       medications: [...medsCopy,
-  //         newMedObject
-  //       ]
-  //     })
-  // };
+  journalUpdated = (journal) => {
+    let newJournals = [...this.state.user.journals, {id: parseInt(journal.id), date: journal.attributes.date, entry: journal.attributes.entry}]
+    let newUser = {...this.state.user}
+    newUser.journals = newJournals
+    this.setState({user: newUser})
+  }
 
   addMedHandler = (medication) => {
     fetch('http://localhost:4000/api/v1/medicines')
@@ -75,7 +70,6 @@ class App extends React.Component {
         })
         .then(res => res.json())
         .then(({data}) => {
-          console.log(data)
           let newMeds = [...this.state.user.medicines, {id: parseInt(data.id), name: data.attributes.name, 'doctors_name': data.attributes['doctors_name']}]
           let newUser = {...this.state.user}
           newUser.medicines = newMeds
@@ -261,7 +255,7 @@ class App extends React.Component {
         <Switch>
           <Route path="/" exact component={HomePage}/>
           <Route path="/add_medication" render={() => <InitialMedsPage addMed={this.addMedHandler}/>}/>
-          <Route path="/current_medications" render={() => <CurrentMedications medicines={this.state.user.medicines} userId={this.state.user.id} dosages={this.state.user.dosages} endDosage={this.endDosage} changeDosage={this.changeDosage}/>} />
+          <Route path="/current_medications" render={() => <CurrentMedications medicines={this.state.user.medicines} userId={this.state.user.id} dosages={this.state.user.dosages} endDosage={this.endDosage} changeDosage={this.changeDosage} journalUpdated={this.journalUpdated}/>} />
           <Route path="/user_login" render={this.renderUserLogin}/>
           <Route path="/user_signup" render={this.renderUserSignUp}/>
           <Route path="/user_main" render={this.renderUserMainContent}/>
