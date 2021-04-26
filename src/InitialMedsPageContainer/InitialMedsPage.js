@@ -1,7 +1,9 @@
 import classes from './InitialMedsPage.module.css';
 import React, {useState} from 'react';
+import { useHistory } from 'react-router-dom'
 
 const InitialMedsPage = (props) => {
+    let history = useHistory()
 
     const [medName, setMedName] = useState('')
     const [doctorName, setDoctorName] = useState('')
@@ -14,6 +16,7 @@ const InitialMedsPage = (props) => {
     }
 
     return (
+        <>
         <form>
             <div className={classes.MedInfo}>
                 <label>Medication Name:</label>
@@ -27,6 +30,8 @@ const InitialMedsPage = (props) => {
                 <button onClick={submitForm}>Submit Medication</button>
             </div>
         </form> 
+        <button onClick={() => history.push('/current_medications')}>Back</button>
+        </>
     )
 }
 
